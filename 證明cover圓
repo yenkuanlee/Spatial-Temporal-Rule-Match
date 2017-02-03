@@ -1,0 +1,13 @@
+[證明] 若點集合S內所有點不大於d，則存在一直徑不大於d之圓可以cover S內所有點
+
+令A, B為S之直徑兩端(距離最長的兩點)
+以A,B中點O為圓心，畫一個直徑為D的圓
+若存在一點C於圓外，且distance(C,A) <= distance(C,B)
+則
+(1) distance(C,B) <= d	(因為B,C都在S內)
+(2) distance(C,O) >= d	(因為C在圓外)
+得distance(C,O) >= distance(C,B)
+
+又 distance(C,B) > distance(C,O)	(因為<COB為頓角，對邊CB為三角形COB中最長邊)
+矛盾，故圓外C不存在
+得證
