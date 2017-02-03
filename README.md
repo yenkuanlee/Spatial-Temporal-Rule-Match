@@ -12,12 +12,12 @@ Output
 ```
 
 # 方法 (Sinlge)
-0. 資料前處理
+- 0. 資料前處理
 ```
 Dataset in postgresql
 經緯度 to geom by postgis
 ```
-1. STapriori rule match
+- 1. STapriori rule match
 ```
 A. 取得snapshot
 	取得所有符合時間條件(time)的events
@@ -34,7 +34,7 @@ C.From Ln-1 to Ln until n=counting
 			add U to Ln set
 			return Lcounting set as answers  set
 ```
-2. Streaming computing
+- 2. Streaming computing
 ```
 不斷偵測是否有過期的點(不符合時間條件)要刪除
 snapshot是持續再更新的
@@ -63,11 +63,11 @@ if flag：        // if true then update index
 ```
 
 # 方法 (Multi)
-0. 資料前處理
+- 0. 資料前處理
 ```
 同single
 ```
-1. STapriori rule match
+- 1. STapriori rule match
 ```
 A. 取得snapshot
 	每條rule會有自己的snapshot
@@ -109,7 +109,7 @@ D. From Ln-1 to Ln until n=counting
 				if rules[ruleID][counting] == n：
 					print pattern,ruleID
 ```
-2. Streaming computing
+- 2. Streaming computing
 ```
 A. 偵測過期點並刪除
 	偵測過期點
