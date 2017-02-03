@@ -2,13 +2,13 @@
 ```
 Rule (time, distance, counting)
 Dataset (ID, 發生時間, 經度, 緯度)
-累積的data
-持續發生的event : Streaming data
+	累積的data
+	持續發生的event : Streaming data
 Objective
-回傳累積data中符合rule的點集合pattern
-online 判斷新的event是否有match rule
+	回傳累積data中符合rule的點集合pattern
+	online 判斷新的event是否有match rule
 Output
-所有符合rule的點集合
+	所有符合rule的點集合
 ```
 
 # 方法 (Sinlge)
@@ -21,9 +21,11 @@ Dataset in postgresql
 ```
 A. 取得snapshot
 	取得所有符合時間條件(time)的events
+	
 B. L2 from snapshot
 	從snapshot events中算出符合距離條件(< distance)的任兩點為L2
 	if counting==2 : then L2 set is 答案
+	
 C.From Ln-1 to Ln until n=counting
 	http://140.116.247.115:10380/doku.php?id=spatial_temporal_rule_match:包含圓證明n個點中認兩點距離小於d, 則存在直徑d圓可包含n個點
 	Ln-1 to Ln：比對Ln-1 set中任兩pattern(x,y) 是否可以長成 Ln       // n = 3 to counting
@@ -72,14 +74,17 @@ if flag：        // if true then update index
 A. 取得snapshot
 	每條rule會有自己的snapshot
 	每個snapshot是一個db中的materialized view, 以rule id 命名區分
+	
 B. L2 from snapshot
 	所有rules的snapshot彙整成一個L2 index
 	L2是HashMap的型態, key是two pattern, value是對應符合的rules
+	
 C. CountingTable (hashmap)
 	一個lookup table, 紀錄每一階層要處理的rule
 	例如某條rule是(3天, 100公尺, 3), 則L4不會有此條rule (是不需要紀錄在L4, 這裡觀念很容易搞錯)
 	此rule會被紀錄到CountingTable[2], CountingTable[3]
 	CountingTable用途是處理Ln時候快速pruning
+	
 D. From Ln-1 to Ln until n=counting
 	Ln的型態與L2相同為HashMap, 紀錄n pattern以及對應符合的rules
 	比對Ln-1 set中任兩pattern(x,y)        // n = 3 to max_count
@@ -121,6 +126,7 @@ A. 偵測過期點並刪除
 			if OldestCase in pattern：
 				Ln.remove(pattern)
 	更新完index後要更新OldestCase, 繼續偵測
+	
 B. 偵測新event並回傳更新
 	偵測新event
 	所有snapshot中最new的點紀錄為NewestCase
